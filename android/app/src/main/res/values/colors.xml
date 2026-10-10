@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- A night sky with nodes in it. Violet is the onion — every connection
+         is wrapped in layers — and green is a live link between two peers.
+         Nothing here is a brand colour; there is no company to brand. -->
+    <color name="tc_bg">#FF0A0E16</color>
+    <color name="tc_surface">#FF111824</color>
+    <color name="tc_surface_high">#FF182131</color>
+    <color name="tc_surface_highest">#FF202B3E</color>
+    <color name="tc_outline">#FF2A3650</color>
+    <color name="tc_outline_soft">#FF1D2738</color>
+
+    <color name="tc_primary">#FF9B87FF</color>
+    <color name="tc_primary_dim">#FF4B3F94</color>
+    <color name="tc_on_primary">#FF140D35</color>
+    <color name="tc_primary_container">#FF2A2366</color>
+    <color name="tc_on_primary_container">#FFE3DDFF</color>
+
+    <color name="tc_signal">#FF3DDC97</color>
+    <color name="tc_signal_dim">#FF1E6B4B</color>
+    <color name="tc_on_signal">#FF00291A</color>
+
+    <color name="tc_warning">#FFFFC15E</color>
+    <color name="tc_error">#FFFF6B7A</color>
+    <color name="tc_on_error">#FF3D0009</color>
+
+    <color name="tc_text">#FFE8EDF6</color>
+    <color name="tc_text_dim">#FF8D9AB0</color>
+    <color name="tc_text_faint">#FF5D6A80</color>
+
+    <color name="tc_bubble_mine">#FF2E2770</color>
+    <color name="tc_bubble_theirs">#FF182131</color>
+
+    <color name="tc_offline">#FF4A566B</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+</resources>

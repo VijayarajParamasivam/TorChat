@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TorChat</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Become a node</string>
+    <string name="onboarding_body">TorChat has no servers and no accounts. This phone makes its own keys and joins the Tor network as a node of its own. Friends reach you at an onion address that says nothing about where you are.</string>
+    <string name="onboarding_point_keys">Your keys are made on this phone and never leave it</string>
+    <string name="onboarding_point_sealed">Every message is sealed end to end before it moves</string>
+    <string name="onboarding_point_relays">Each chat crosses six Tor relays, none of which sees both ends</string>
+    <string name="onboarding_name_hint">What should friends call you?</string>
+    <string name="onboarding_sigil_hint">A glyph for your node, 1–2 characters (optional)</string>
+    <string name="onboarding_create">Create my node</string>
+    <string name="onboarding_restore">Restore from a backup</string>
+    <string name="onboarding_footnote">The first start takes 30 seconds or more while Tor connects. Later starts take a few seconds.</string>
+    <string name="onboarding_name_required">Pick a name your friends will recognise</string>
+
+    <!-- Home -->
+    <string name="tab_chats">Chats</string>
+    <string name="tab_peers">Peers</string>
+    <string name="tab_node">My node</string>
+    <string name="add_friend">Add friend</string>
+    <string name="my_code">My code</string>
+    <string name="requests">Requests</string>
+    <string name="settings">Settings</string>
+    <string name="diagnostics">Diagnostics</string>
+    <string name="search_chats">Search chats</string>
+    <string name="view_as_grid">Show peers as a grid</string>
+    <string name="view_as_list">Show peers as a list</string>
+    <string name="reconnect_all">Reconnect everyone</string>
+
+    <plurals name="requests_banner">
+        <item quantity="one">%d person wants to connect</item>
+        <item quantity="other">%d people want to connect</item>
+    </plurals>
+    <string name="requests_banner_action">Review</string>
+
+    <string name="empty_chats_title">No conversations yet</string>
+    <string name="empty_chats_body">There is no directory to search. Swap contact codes with a friend — over any messenger, or face to face with the QR.</string>
+    <string name="empty_peers_title">Your mesh is empty</string>
+    <string name="empty_peers_body">Every friend you add becomes a direct link from your node to theirs.</string>
+    <string name="share_my_code">Share my code</string>
+
+    <string name="you">You</string>
+    <string name="online">online</string>
+    <string name="last_seen">last seen %s</string>
+    <string name="never_connected">not connected yet</string>
+    <string name="no_messages_yet">Say hello — it goes straight to their node</string>
+    <string name="draft_you">You: %s</string>
+
+    <!-- Node status -->
+    <string name="phase_offline">No network</string>
+    <string name="phase_offline_detail">Messages wait in your outbox and go out the moment there is a network again.</string>
+    <string name="phase_bootstrapping">Joining the Tor network</string>
+    <string name="phase_bootstrapping_detail">Downloading the relay directory. The first time takes a while; after that it is quick.</string>
+    <string name="phase_publishing">Creating your onion address</string>
+    <string name="phase_publishing_detail">Your node is online. Its address is being created.</string>
+    <string name="phase_propagating">Publishing your address</string>
+    <string name="phase_propagating_detail">You can message friends now. They can reach you once the Tor directories know your address — usually under a minute.</string>
+    <string name="phase_reachable">Reachable</string>
+    <string name="phase_reachable_detail">Your node is live. Friends can reach you from any network on earth.</string>
+    <string name="phase_stopped">Node stopped</string>
+    <string name="phase_stopped_detail">Nothing can reach you while the node is stopped.</string>
+    <string name="phase_restarting">Tor stopped — bringing it back</string>
+    <string name="phase_failed">Tor could not start</string>
+    <string name="phase_retrying">Starting Tor again…</string>
+
+    <string name="node_onion_label">Your onion address</string>
+    <string name="node_id_label">Your TorChat ID</string>
+    <string name="node_onion_pending">created once Tor is up</string>
+    <string name="node_peers_online">online</string>
+    <string name="node_peers_known">friends</string>
+    <string name="node_outbox">in outbox</string>
+    <string name="node_principles">No server · No account · No IP address shared</string>
+    <string name="node_health">Keeping the node alive</string>
+    <string name="health_notifications">Notifications are off — you will not hear about new messages.</string>
+    <string name="health_battery">Battery optimisation can pause your node while the screen is off.</string>
+    <string name="health_power_saver">Battery saver is on. Android may delay your connections.</string>
+    <string name="health_all_good">Nothing is holding your node back.</string>
+    <string name="fix">Fix</string>
+    <string name="start_node">Start node</string>
+    <string name="restart_node">Restart node</string>
+    <string name="stop_node">Stop node</string>
+    <string name="copied">Copied</string>
+
+    <!-- Chat -->
+    <string name="message_hint">Message</string>
+    <string name="send">Send</string>
+    <string name="chat_banner">Sealed end to end · carried over an onion circuit · stored only on your two devices</string>
+    <string name="chat_offline_hint">%s is offline. Messages wait in your outbox and send themselves when you reconnect.</string>
+    <string name="try_now">Try now</string>
+    <string name="view_profile">View profile</string>
+    <string name="mute">Mute notifications</string>
+    <string name="unmute">Unmute notifications</string>
+    <string name="clear_history">Clear history</string>
+    <string name="clear_history_confirm">Delete every message in this conversation from this phone? Your friend keeps their copy.</string>
+    <string name="state_queued">queued</string>
+    <string name="state_sent">sent</string>
+    <string name="state_delivered">delivered</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="trying">Trying to reach them…</string>
+    <string name="reached">Connected</string>
+
+    <!-- Friend profile -->
+    <string name="friend_id">TorChat ID</string>
+    <string name="friend_onions">Onion addresses</string>
+    <string name="friend_added">Added %s</string>
+    <string name="message">Message</string>
+    <string name="notification_settings">Notification settings</string>
+    <string name="remove_friend">Remove friend</string>
+    <string name="remove_friend_confirm">Remove %s? They will not be able to reach you again unless you add them back or unblock them.</string>
+    <string name="remove">Remove</string>
+    <string name="cancel">Cancel</string>
+    <string name="copy_id">Copy ID</string>
+    <string name="mark_read">Mark as read</string>
+    <string name="open">Open</string>
+
+    <!-- Add friend -->
+    <string name="add_friend_body">Paste the TORCHAT1… code your friend sent you, or scan the QR on their screen. Only one of you needs to add the other.</string>
+    <string name="code_hint">Their contact code</string>
+    <string name="paste">Paste</string>
+    <string name="scan_qr">Scan QR</string>
+    <string name="add">Add</string>
+    <string name="code_preview">This code belongs to</string>
+    <string name="added_friend">Added %s — connecting through Tor</string>
+    <string name="node_starting">Your node is still starting — give Tor a moment</string>
+
+    <!-- My code -->
+    <string name="my_code_body">Anyone holding this code can try to connect to you. It contains your onion address and public keys — no IP address, no location.</string>
+    <string name="my_code_waiting">Waiting for your onion address…</string>
+    <string name="action_copy">Copy</string>
+    <string name="share">Share</string>
+    <string name="share_qr">Share QR image</string>
+    <string name="share_code_subject">My TorChat contact code</string>
+
+    <!-- Requests -->
+    <string name="requests_header">Asking to connect</string>
+    <string name="blocked_header">Blocked</string>
+    <string name="requests_empty">Nobody is waiting. A request appears when someone who has your code dials in.</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="unblock">Unblock</string>
+
+    <!-- Scanner -->
+    <string name="scan_hint">Point the camera at the QR on your friend\'s screen</string>
+    <string name="scan_no_camera">Camera permission is needed to scan. You can paste the code instead.</string>
+    <string name="scan_not_a_card">That QR is not a TorChat code</string>
+
+    <!-- Import (shared from another app) -->
+    <string name="import_title">Add this contact?</string>
+    <string name="import_no_identity">Set up TorChat first, then open the code again.</string>
+    <string name="import_bad">That is not a usable TorChat code</string>
+    <string name="open_torchat">Open TorChat</string>
+
+    <!-- Notifications -->
+    <string name="channel_group_node">Your node</string>
+    <string name="channel_group_chats">Chats</string>
+    <string name="channel_node">Node status</string>
+    <string name="channel_node_desc">The permanent notification that keeps Tor and your onion address running.</string>
+    <string name="channel_messages">Messages</string>
+    <string name="channel_messages_desc">New messages from friends.</string>
+    <string name="channel_requests">Connection requests</string>
+    <string name="channel_requests_desc">Someone with your code asking to connect.</string>
+    <string name="channel_alerts">Node alerts</string>
+    <string name="channel_alerts_desc">When your node stops and needs you to restart it.</string>
+    <string name="channel_conversation_desc">Messages from %s.</string>
+    <string name="notif_reply">Reply</string>
+    <string name="notif_request_body">wants to connect. Accept to start chatting.</string>
+    <string name="notif_stopped_title">TorChat stopped</string>
+    <string name="notif_stopped_body">Android stopped your node in the background. Tap to reconnect.</string>
+    <plurals name="notif_hidden_messages">
+        <item quantity="one">%d new message</item>
+        <item quantity="other">%d new messages</item>
+    </plurals>
+
+    <!-- Channels screen -->
+    <string name="channels_title">Notification channels</string>
+    <string name="channels_body">Android groups notifications into channels. TorChat makes one per chat when you add a friend, renames it when they rename themselves, and deletes it when you remove them.</string>
+    <string name="channel_new">New channel for a chat</string>
+    <string name="channel_rename">Rename…</string>
+    <string name="channel_delete">Delete channel</string>
+    <string name="channel_open_settings">Open in system settings</string>
+    <string name="channel_reset">Recreate default channels</string>
+    <string name="channel_pick_friend">Which chat?</string>
+    <string name="channel_rename_title">Channel name</string>
+    <string name="channel_created">Channel created</string>
+    <string name="channel_deleted">Channel deleted</string>
+    <string name="channel_renamed">Channel renamed</string>
+    <string name="channel_muted">Muted — recreated as a silent channel</string>
+    <string name="channel_unmuted">Unmuted — recreated with sound</string>
+    <string name="channels_unsupported">Notification channels need Android 8 or later.</string>
+    <string name="importance_none">blocked</string>
+    <string name="importance_min">silent, minimised</string>
+    <string name="importance_low">silent</string>
+    <string name="importance_default">sound</string>
+    <string name="importance_high">sound and pop-up</string>
+
+    <!-- Settings -->
+    <string name="pref_profile">Profile</string>
+    <string name="pref_name">Display name</string>
+    <string name="pref_sigil">Sigil</string>
+    <string name="pref_connection">Connection</string>
+    <string name="pref_boot">Start when the phone starts</string>
+    <string name="pref_boot_summary">Bring your node up after a reboot, so friends can reach you without opening the app.</string>
+    <string name="pref_always_on">Always-on connection</string>
+    <string name="pref_always_on_summary">Keep the processor awake while the node runs. Messages arrive instantly, at a cost in battery.</string>
+    <string name="pref_battery">Battery optimisation</string>
+    <string name="pref_battery_on">On — Android may pause your node. Tap to exempt TorChat.</string>
+    <string name="pref_battery_off">Off — your node can run in the background</string>
+    <string name="pref_notifications">Notifications</string>
+    <string name="pref_previews">Show message text</string>
+    <string name="pref_previews_summary">When off, notifications only say that a message arrived.</string>
+    <string name="pref_channels_summary">Create, rename, mute and delete channels</string>
+    <string name="pref_identity">Identity</string>
+    <string name="pref_backup">Back up identity</string>
+    <string name="pref_backup_summary">Save your keys and onion key to a file. Anyone with that file can be you.</string>
+    <string name="pref_advanced">Advanced</string>
+    <string name="pref_log">Node log</string>
+    <string name="pref_log_summary">What Tor and the engine are doing, line by line</string>
+    <string name="pref_diagnostics_summary">Exercise each Android component the node is built from</string>
+    <string name="pref_about">About</string>
+    <string name="pref_version">Version</string>
+    <string name="backup_saved">Backup saved. Keep it somewhere safe.</string>
+    <string name="backup_failed">Could not save the backup: %s</string>
+    <string name="restore_failed">Could not restore: %s</string>
+    <string name="restored">Restored %s</string>
+
+    <!-- Log -->
+    <string name="log_title">Node log</string>
+    <string name="copy_all">Copy all</string>
+    <string name="log_empty">Nothing yet.</string>
+
+    <!-- Widget -->
+    <string name="widget_label">TorChat node</string>
+    <string name="widget_description">Your node\'s status, peers online and unread messages</string>
+    <string name="widget_stopped">Node stopped · tap to start</string>
+    <plurals name="widget_unread">
+        <item quantity="one">%d unread</item>
+        <item quantity="other">%d unread</item>
+    </plurals>
+    <string name="widget_online">%1$d of %2$d online</string>
+
+    <!-- Diagnostics -->
+    <string name="diag_body">TorChat is built from the four kinds of Android component. Each button below activates one of them by its own mechanism and reports what happened.</string>
+    <string name="diag_activities">Activities</string>
+    <string name="diag_activity_explicit">Open the QR scanner (explicit intent)</string>
+    <string name="diag_activity_implicit">Share my code (implicit intent)</string>
+    <string name="diag_activity_import">Open the import screen with my own code</string>
+    <string name="diag_services">Services</string>
+    <string name="diag_service_start">Start the node (startForegroundService)</string>
+    <string name="diag_service_bind">Bind to the node (bindService)</string>
+    <string name="diag_service_unbind">Unbind</string>
+    <string name="diag_service_stop">Stop the node (stopService)</string>
+    <string name="diag_receivers">Broadcast receivers</string>
+    <string name="diag_receiver_keepalive">Send a keep-alive broadcast</string>
+    <string name="diag_receiver_widget">Broadcast a widget refresh</string>
+    <string name="diag_receiver_dynamic">Dynamic receiver: power-saver changes</string>
+    <string name="diag_providers">Content providers</string>
+    <string name="diag_provider_query">Query friends and messages (ContentResolver)</string>
+    <string name="diag_provider_fileprovider">Share my QR through FileProvider</string>
+    <string name="diag_console">Results</string>
+
+    <string name="unknown_error">Something went wrong</string>
+</resources>
