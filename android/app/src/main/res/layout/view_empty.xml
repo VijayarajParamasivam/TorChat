@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="32dp">
+
+    <ImageView
+        android:id="@+id/empty_icon"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:alpha="0.8"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_hub"
+        app:tint="@color/tc_primary_dim" />
+
+    <TextView
+        android:id="@+id/empty_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="@color/tc_text" />
+
+    <TextView
+        android:id="@+id/empty_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.15"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="@color/tc_text_dim" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/empty_action"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/share_my_code"
+        app:icon="@drawable/ic_qr_code" />
+</LinearLayout>

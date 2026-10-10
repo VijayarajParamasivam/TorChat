@@ -18,6 +18,12 @@ const DIAL_STAGGER_MS = 2000;
  */
 const DIAL_TIMEOUT_MS = 90000;
 
+/**
+ * Waits between attempts to bring a dead Tor back. The last one repeats, so a
+ * machine with no network retries every two minutes rather than spinning.
+ */
+const TOR_RESTART_DELAYS_MS = [3000, 10000, 30000, 60000, 120000];
+
 module.exports = {
   ONION_PORT,
   REDIAL_INTERVAL_MS,
@@ -25,5 +31,6 @@ module.exports = {
   FIRST_BACKOFF_MS,
   DIAL_STAGGER_MS,
   DIAL_TIMEOUT_MS,
+  TOR_RESTART_DELAYS_MS,
   MAX_ENDPOINTS,
 };

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_try_now"
+        android:icon="@drawable/ic_refresh"
+        android:title="@string/try_now"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_profile"
+        android:title="@string/view_profile"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_mute"
+        android:title="@string/mute"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_clear"
+        android:title="@string/clear_history"
+        app:showAsAction="never" />
+</menu>

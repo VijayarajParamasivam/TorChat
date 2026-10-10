@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="1.15"
+            android:text="@string/diag_body"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="@color/tc_text_dim" />
+
+        <!-- Activities -->
+        <TextView
+            style="@style/DiagSection"
+            android:text="@string/diag_activities" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_explicit"
+            style="@style/DiagButton"
+            android:text="@string/diag_activity_explicit" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_implicit"
+            style="@style/DiagButton"
+            android:text="@string/diag_activity_implicit" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/activity_import"
+            style="@style/DiagButton"
+            android:text="@string/diag_activity_import" />
+
+        <!-- Services -->
+        <TextView
+            style="@style/DiagSection"
+            android:text="@string/diag_services" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/service_start"
+            style="@style/DiagButton"
+            android:text="@string/diag_service_start" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/service_bind"
+            style="@style/DiagButton"
+            android:text="@string/diag_service_bind" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/service_unbind"
+            style="@style/DiagButton"
+            android:text="@string/diag_service_unbind" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/service_stop"
+            style="@style/DiagButton"
+            android:text="@string/diag_service_stop" />
+
+        <!-- Broadcast receivers -->
+        <TextView
+            style="@style/DiagSection"
+            android:text="@string/diag_receivers" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/receiver_keepalive"
+            style="@style/DiagButton"
+            android:text="@string/diag_receiver_keepalive" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/receiver_widget"
+            style="@style/DiagButton"
+            android:text="@string/diag_receiver_widget" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/receiver_dynamic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/diag_receiver_dynamic"
+            android:textColor="@color/tc_text" />
+
+        <!-- Content providers -->
+        <TextView
+            style="@style/DiagSection"
+            android:text="@string/diag_providers" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/provider_query"
+            style="@style/DiagButton"
+            android:text="@string/diag_provider_query" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/provider_file"
+            style="@style/DiagButton"
+            android:text="@string/diag_provider_fileprovider" />
+
+        <!-- What happened -->
+        <TextView
+            style="@style/DiagSection"
+            android:text="@string/diag_console" />
+
+        <TextView
+            android:id="@+id/console"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_console"
+            android:fontFamily="monospace"
+            android:minHeight="160dp"
+            android:padding="12dp"
+            android:textColor="@color/tc_signal"
+            android:textIsSelectable="true"
+            android:textSize="11sp" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

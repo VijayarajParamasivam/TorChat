@@ -142,5 +142,56 @@ run(async () => {
 
   check('sending to a stranger throws', await threw(() => engine.sendText('TOR-NOBODY', 'hi')));
 
+  // --- tor dying, and coming back ------------------------------------------
+  //
+  // Tor dying used to end the session: every friend offline until somebody
+  // relaunched the app. The engine now restarts it on its own — but only after
+  // a real exit, never because Tor is merely still starting.
+
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const restarter = new TorChat();
+  restarter.book.load();
+  let starts = 0;
+  restarter._startTor = async () => {
+    starts += 1;
+    restarter.tor = { ready: true, stop() {} };
+  };
+
+  restarter._scheduleTorRestart();
+  check('a tor that has not died is not restarted', restarter.torRestartTimer === null);
+
+  restarter.torDown = true;
+  restarter._scheduleTorRestart();
+  check('a dead tor gets a restart scheduled', restarter.torRestartTimer !== null);
+  check('and the status says so', restarter.status().restarting === true);
+  restarter._scheduleTorRestart();
+  check('scheduling twice does not stack restarts', starts === 0);
+
+  await sleep(3300);
+  check('the restart runs once', starts === 1);
+  check('and tor counts as up again', restarter.torDown === false && !restarter.status().restarting);
+
+  const stopped = new TorChat();
+  stopped.book.load();
+  let stoppedStarts = 0;
+  stopped._startTor = async () => {
+    stoppedStarts += 1;
+  };
+  stopped.torDown = true;
+  stopped._scheduleTorRestart();
+  await stopped.stop();
+  await sleep(3300);
+  check('stopping the engine cancels a pending restart', stoppedStarts === 0);
+
+  // reconnectAll ignores backoff: what waking from sleep calls.
+  const sleeper = new TorChat();
+  sleeper.book.load();
+  sleeper.friends.set('TOR-SLEEPY', { id: 'TOR-SLEEPY', name: 'sleepy', sigil: 's', endpoints: [] });
+  sleeper.retry.penalise('TOR-SLEEPY');
+  check('a penalised friend is not due', !sleeper.retry.due('TOR-SLEEPY'));
+  sleeper.reconnectAll();
+  check('reconnecting clears the backoff', sleeper.retry.due('TOR-SLEEPY'));
+  await sleeper.stop();
+
   fs.rmSync(dir, { recursive: true, force: true });
 });

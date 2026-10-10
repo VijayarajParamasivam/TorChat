@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The overflow on one notification channel. -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/channel_settings" android:title="@string/channel_open_settings" />
+    <item android:id="@+id/channel_rename" android:title="@string/channel_rename" />
+    <item android:id="@+id/channel_mute" android:title="@string/mute" />
+    <item android:id="@+id/channel_delete" android:title="@string/channel_delete" />
+</menu>

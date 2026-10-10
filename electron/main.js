@@ -12,7 +12,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const { app, BrowserWindow, ipcMain, clipboard } = require('electron');
+const { app, BrowserWindow, ipcMain, clipboard, Notification, powerMonitor } = require('electron');
 
 const identity = require('../src/core/identity');
 const store = require('../src/core/store');
@@ -27,8 +27,68 @@ let win = null;
 let active = null;
 let starting = null;
 
+/** The conversation open in the terminal, so it does not also raise a notification. */
+let activeChat = null;
+/** Messages that arrived while nobody was looking. */
+let unread = 0;
+/**
+ * Live notifications. Held here because a notification object that gets
+ * garbage-collected loses its click handler on Windows — the toast still shows,
+ * and clicking it does nothing.
+ */
+const toasts = new Set();
+
 function send(channel, payload) {
   if (win && !win.isDestroyed()) win.webContents.send(channel, payload);
+}
+
+function windowTitle() {
+  const base = profileName ? `TorChat [${profileName}]` : 'TorChat';
+  return unread ? `(${unread}) ${base}` : base;
+}
+
+function updateUnread() {
+  app.setBadgeCount(unread);
+  if (!win || win.isDestroyed()) return;
+  win.setTitle(windowTitle());
+  if (unread > 0 && !win.isFocused()) win.flashFrame(true);
+}
+
+function showWindow() {
+  if (!win || win.isDestroyed()) createWindow();
+  if (win.isMinimized()) win.restore();
+  win.show();
+  win.focus();
+}
+
+/**
+ * A desktop notification for a message nobody is looking at.
+ *
+ * The terminal only printed a one-line preview into its scrollback, so a
+ * message that arrived while the window was in the background went unnoticed
+ * until someone happened to look. Now it raises a native notification, flashes
+ * the taskbar and counts in the title; clicking the notification opens that
+ * conversation.
+ */
+function notifyMessage({ peerId, name, message }) {
+  const looking = win && !win.isDestroyed() && win.isFocused() && activeChat === peerId;
+  if (looking) return;
+
+  unread += 1;
+  updateUnread();
+
+  if (!Notification.isSupported()) return;
+  const body = message.body.length > 160 ? `${message.body.slice(0, 160)}…` : message.body;
+  const toast = new Notification({ title: name, body });
+  toasts.add(toast);
+  const forget = () => toasts.delete(toast);
+  toast.on('click', () => {
+    forget();
+    showWindow();
+    send('torchat:open-chat', peerId);
+  });
+  toast.on('close', forget);
+  toast.show();
 }
 
 /** Boot the engine once an identity exists. Safe to call repeatedly. */
@@ -39,7 +99,10 @@ function startEngine() {
   const engine = new TorChat();
   engine.on('log', (text) => send('torchat:log', text));
   engine.on('status', (payload) => send('torchat:status', payload));
-  engine.on('message', (payload) => send('torchat:message', payload));
+  engine.on('message', (payload) => {
+    send('torchat:message', payload);
+    notifyMessage(payload);
+  });
   engine.on('delivered', (payload) => send('torchat:delivered', payload));
   engine.on('ready', (payload) => send('torchat:ready', payload));
   engine.on('friends-changed', () => send('torchat:friends-changed'));
@@ -88,6 +151,15 @@ function createWindow() {
   });
 
   win.loadFile(path.join(__dirname, '..', 'src', 'ui', 'index.html'));
+
+  // Looking at the window is reading what arrived.
+  win.on('focus', () => {
+    win.flashFrame(false);
+    if (unread) {
+      unread = 0;
+      updateUnread();
+    }
+  });
 }
 
 app.whenReady().then(() => {
@@ -96,6 +168,14 @@ app.whenReady().then(() => {
   if (identity.load()) startEngine().catch(() => {});
 
   createWindow();
+
+  // Waking from sleep leaves every link a husk and every friend in a backoff
+  // earned while the machine was asleep. Dial everyone now rather than waiting
+  // out minutes of it.
+  powerMonitor.on('resume', () => {
+    send('torchat:log', 'woke from sleep — reconnecting to everyone');
+    active?.reconnectAll();
+  });
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -212,6 +292,18 @@ const handlers = {
 
   async tor() {
     return requireEngine().status();
+  },
+
+  /** Which conversation the terminal has open — it never notifies about that one. */
+  setActiveChat(peerId) {
+    activeChat = peerId || null;
+    return true;
+  },
+
+  /** The network came back: dial everyone now, ignoring backoff. */
+  reconnect() {
+    active?.reconnectAll();
+    return true;
   },
 
   exportIdentity() {

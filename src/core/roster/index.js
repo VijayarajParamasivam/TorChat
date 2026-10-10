@@ -37,7 +37,12 @@ const tor = require('../tor');
 const transport = require('../transport');
 
 const Endpoint = require('../../models/endpoint');
-const { ONION_PORT, REDIAL_INTERVAL_MS, DIAL_TIMEOUT_MS } = require('./constants');
+const {
+  ONION_PORT,
+  REDIAL_INTERVAL_MS,
+  DIAL_TIMEOUT_MS,
+  TOR_RESTART_DELAYS_MS,
+} = require('./constants');
 const { FriendBook } = require('./friends');
 const { Messenger } = require('./messages');
 const { explainDialFailure, orderEndpoints, raceEndpoints, RetryPolicy } = require('./dialer');
@@ -65,6 +70,15 @@ class TorChat extends EventEmitter {
     this.port = null;
     this.cardCode = null;
     this.redialTimer = null;
+
+    // Bringing a dead Tor back. Only a real exit sets torDown — "not ready"
+    // also describes a Tor that is still starting, and restarting one of those
+    // would race the start already in progress.
+    this.stopped = false;
+    this.torDown = false;
+    this.torRestarting = false;
+    this.torRestartTimer = null;
+    this.torRestartAttempts = 0;
   }
 
   log(text) {
@@ -127,6 +141,15 @@ class TorChat extends EventEmitter {
       this.published = false;
       for (const link of [...this.links.values()]) link.close();
       this.links.clear();
+      this.torDown = true;
+      this.emit('ready', this.status());
+      this._scheduleTorRestart();
+    });
+
+    // A descriptor that uploads after the startup wait gave up still counts.
+    this.tor.on('published', () => {
+      this.published = true;
+      this.emit('ready', this.status());
     });
 
     try {
@@ -156,7 +179,77 @@ class TorChat extends EventEmitter {
     }
   }
 
+  /**
+   * Bring a dead Tor back, with backoff.
+   *
+   * Tor dying is fatal to connectivity — there is nothing to fall back to — but
+   * it does not have to be fatal to the session. A crashed or killed daemon used
+   * to leave the app offline until someone noticed and restarted it; this does
+   * the same thing immediately. The saved onion key is reused, so the address
+   * every friend holds stays valid.
+   */
+  _scheduleTorRestart() {
+    if (this.stopped || !this.torDown || this.torRestartTimer) return;
+
+    const wait =
+      TOR_RESTART_DELAYS_MS[Math.min(this.torRestartAttempts, TOR_RESTART_DELAYS_MS.length - 1)];
+    this.torRestartAttempts += 1;
+    this.torRestarting = true;
+    this.log(`restarting tor in ${Math.round(wait / 1000)}s`);
+
+    this.torRestartTimer = setTimeout(async () => {
+      this.torRestartTimer = null;
+      if (this.stopped) return;
+
+      try {
+        this.tor?.stop();
+      } catch {
+        /* it is already dead; this only detaches its listeners */
+      }
+
+      try {
+        await this._startTor();
+      } catch (err) {
+        this.log(`tor did not come back: ${err.message}`);
+        this._scheduleTorRestart();
+        return;
+      }
+
+      if (this.stopped) {
+        this.tor?.stop();
+        return;
+      }
+
+      this.torDown = false;
+      this.torRestarting = false;
+      this.torRestartAttempts = 0;
+      this.log('tor is back — reconnecting');
+      // Everyone failed while Tor was down, through no fault of theirs.
+      for (const friend of this.book.values()) this.retry.reset(friend.id);
+      this._redialAll();
+    }, wait);
+    this.torRestartTimer.unref?.();
+  }
+
+  /**
+   * Dial everyone who is not connected, now, ignoring backoff — after the
+   * machine wakes from sleep, say, when every link is a husk and every friend
+   * is parked in a backoff earned while the network was asleep.
+   */
+  reconnectAll() {
+    if (this.stopped) return;
+    for (const friend of this.book.values()) this.retry.reset(friend.id);
+    if (this.torDown) {
+      this._scheduleTorRestart();
+      return;
+    }
+    this._redialAll();
+  }
+
   async stop() {
+    this.stopped = true;
+    clearTimeout(this.torRestartTimer);
+    this.torRestartTimer = null;
     clearInterval(this.redialTimer);
     for (const link of this.links.values()) link.close();
     this.links.clear();
@@ -210,6 +303,7 @@ class TorChat extends EventEmitter {
       port: ONION_PORT,
       published: this.published,
       running: Boolean(this.tor?.ready),
+      restarting: this.torRestarting,
       binary: tor.find(),
       friends: this.book.size,
       online: this.links.size,

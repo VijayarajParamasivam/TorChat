@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Only the QR image directory is shareable. Nothing else in the app's
+     storage can be reached through the FileProvider. -->
+<paths>
+    <cache-path name="qr" path="qr/" />
+</paths>

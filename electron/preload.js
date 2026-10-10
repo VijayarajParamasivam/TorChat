@@ -16,6 +16,7 @@ const EVENTS = [
   'torchat:ready',
   'torchat:friends-changed',
   'torchat:history-changed',
+  'torchat:open-chat',
 ];
 
 contextBridge.exposeInMainWorld('torchat', {

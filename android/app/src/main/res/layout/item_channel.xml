@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="20dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="12dp">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:contentDescription="@null"
+        android:padding="6dp"
+        android:src="@drawable/ic_notifications"
+        app:tint="@color/tc_primary" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceTitleSmall"
+            android:textColor="@color/tc_text"
+            tools:text="Messages" />
+
+        <TextView
+            android:id="@+id/details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="@color/tc_text_dim"
+            tools:text="sound and pop-up · Chats" />
+
+        <TextView
+            android:id="@+id/channel_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textAppearance="@style/TextAppearance.TorChat.Mono"
+            android:textSize="11sp"
+            tools:text="messages" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/more"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/settings"
+        android:focusable="false"
+        android:src="@drawable/ic_more_vert"
+        app:tint="@color/tc_text_dim" />
+</LinearLayout>

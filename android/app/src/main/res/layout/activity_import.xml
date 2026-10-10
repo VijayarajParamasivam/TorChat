@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shown over whatever app shared a contact code with us. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/import_title"
+        android:textAppearance="?attr/textAppearanceTitleLarge"
+        android:textColor="@color/tc_text" />
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="@color/tc_text"
+        tools:text="bob" />
+
+    <TextView
+        android:id="@+id/peer_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textAppearance="@style/TextAppearance.TorChat.Mono"
+        tools:text="TOR-4K7P-9XQ2-M3TV" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="@color/tc_text_dim"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:indeterminateTint="@color/tc_primary"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/add"
+            app:icon="@drawable/ic_person_add" />
+    </LinearLayout>
+</LinearLayout>

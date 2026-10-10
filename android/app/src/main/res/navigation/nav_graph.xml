@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Every screen in the app and every way between them.
+
+    One activity hosts all of these fragments. Deep links let a notification,
+    the home-screen widget or a conversation shortcut land on the right screen
+    with a sensible back stack built underneath it.
+-->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <!-- First launch only: make the keys, become a node. -->
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.torchat.ui.onboarding.OnboardingFragment"
+        android:label=""
+        tools:layout="@layout/fragment_onboarding">
+        <action
+            android:id="@+id/action_onboarding_to_home"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Chats, peers and the node itself, as swipeable tabs. -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.torchat.ui.home.HomeFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_chat"
+            app:destination="@id/chatFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_home_to_friendProfile"
+            app:destination="@id/friendProfileFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_home_to_addFriend"
+            app:destination="@id/addFriendFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_home_to_myCard"
+            app:destination="@id/myCardFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_home_to_requests"
+            app:destination="@id/requestsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_home_to_settings"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_home_to_diagnostics"
+            app:destination="@id/diagnosticsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.torchat.ui.chat.ChatFragment"
+        android:label=""
+        tools:layout="@layout/fragment_chat">
+        <argument
+            android:name="peerId"
+            app:argType="string" />
+        <!-- Notifications and conversation shortcuts open chats through this. -->
+        <deepLink app:uri="torchat://chat/{peerId}" />
+        <action
+            android:id="@+id/action_chat_to_friendProfile"
+            app:destination="@id/friendProfileFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/friendProfileFragment"
+        android:name="com.torchat.ui.friend.FriendProfileFragment"
+        android:label=""
+        tools:layout="@layout/fragment_friend_profile">
+        <argument
+            android:name="peerId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_friendProfile_to_chat"
+            app:destination="@id/chatFragment"
+            app:popUpTo="@id/homeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addFriendFragment"
+        android:name="com.torchat.ui.add.AddFriendFragment"
+        android:label="@string/add_friend"
+        tools:layout="@layout/fragment_add_friend">
+        <argument
+            android:name="code"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <deepLink app:uri="torchat://add?code={code}" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/myCardFragment"
+        android:name="com.torchat.ui.card.MyCardFragment"
+        android:label="@string/my_code"
+        tools:layout="@layout/fragment_my_card">
+        <deepLink app:uri="torchat://card" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/requestsFragment"
+        android:name="com.torchat.ui.requests.RequestsFragment"
+        android:label="@string/requests"
+        tools:layout="@layout/fragment_requests">
+        <deepLink app:uri="torchat://requests" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.torchat.ui.settings.SettingsFragment"
+        android:label="@string/settings">
+        <action
+            android:id="@+id/action_settings_to_channels"
+            app:destination="@id/channelsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_settings_to_log"
+            app:destination="@id/logFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_settings_to_diagnostics"
+            app:destination="@id/diagnosticsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_settings_to_myCard"
+            app:destination="@id/myCardFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/channelsFragment"
+        android:name="com.torchat.ui.settings.ChannelsFragment"
+        android:label="@string/channels_title"
+        tools:layout="@layout/fragment_channels" />
+
+    <fragment
+        android:id="@+id/logFragment"
+        android:name="com.torchat.ui.settings.LogFragment"
+        android:label="@string/log_title"
+        tools:layout="@layout/fragment_log" />
+
+    <fragment
+        android:id="@+id/diagnosticsFragment"
+        android:name="com.torchat.ui.settings.DiagnosticsFragment"
+        android:label="@string/diagnostics"
+        tools:layout="@layout/fragment_diagnostics" />
+
+    <!-- From anywhere back to setup: after a restore, or with no identity. -->
+    <action
+        android:id="@+id/action_global_onboarding"
+        app:destination="@id/onboardingFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_global_chat"
+        app:destination="@id/chatFragment"
+        app:popUpTo="@id/homeFragment" />
+</navigation>

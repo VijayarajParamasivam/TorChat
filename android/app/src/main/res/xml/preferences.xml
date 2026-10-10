@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/pref_profile">
+        <Preference
+            app:icon="@drawable/ic_person"
+            app:key="profile_name"
+            app:title="@string/pref_name" />
+        <Preference
+            app:key="profile_sigil"
+            app:title="@string/pref_sigil" />
+        <Preference
+            app:icon="@drawable/ic_qr_code"
+            app:key="my_code"
+            app:title="@string/my_code" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/pref_connection">
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:icon="@drawable/ic_power"
+            app:key="start_on_boot"
+            app:summary="@string/pref_boot_summary"
+            app:title="@string/pref_boot" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="always_on"
+            app:summary="@string/pref_always_on_summary"
+            app:title="@string/pref_always_on" />
+        <Preference
+            app:icon="@drawable/ic_battery"
+            app:key="battery"
+            app:title="@string/pref_battery" />
+        <Preference
+            app:icon="@drawable/ic_refresh"
+            app:key="restart"
+            app:title="@string/restart_node" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/pref_notifications">
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:icon="@drawable/ic_notifications"
+            app:key="previews"
+            app:summary="@string/pref_previews_summary"
+            app:title="@string/pref_previews" />
+        <Preference
+            app:key="channels"
+            app:summary="@string/pref_channels_summary"
+            app:title="@string/channels_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/pref_identity">
+        <Preference
+            app:icon="@drawable/ic_save"
+            app:key="backup"
+            app:summary="@string/pref_backup_summary"
+            app:title="@string/pref_backup" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/pref_advanced">
+        <Preference
+            app:icon="@drawable/ic_subject"
+            app:key="log"
+            app:summary="@string/pref_log_summary"
+            app:title="@string/pref_log" />
+        <Preference
+            app:icon="@drawable/ic_bug"
+            app:key="diagnostics"
+            app:summary="@string/pref_diagnostics_summary"
+            app:title="@string/diagnostics" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/pref_about">
+        <Preference
+            app:icon="@drawable/ic_info"
+            app:key="version"
+            app:selectable="false"
+            app:title="@string/pref_version" />
+    </PreferenceCategory>
+</PreferenceScreen>

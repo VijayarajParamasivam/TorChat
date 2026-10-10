@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <FrameLayout
+            android:id="@+id/ring"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:layout_marginTop="8dp"
+            android:padding="4dp">
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            android:textColor="@color/tc_text"
+            tools:text="alice" />
+
+        <TextView
+            android:id="@+id/presence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            tools:text="online" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/message"
+                app:icon="@drawable/ic_chat" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/try_now"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/try_now"
+                app:icon="@drawable/ic_refresh" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/friend_id"
+                    android:textAppearance="@style/TextAppearance.TorChat.Overline" />
+
+                <TextView
+                    android:id="@+id/peer_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="@style/TextAppearance.TorChat.Mono"
+                    android:textColor="@color/tc_text"
+                    android:textIsSelectable="true"
+                    android:textSize="15sp"
+                    tools:text="TOR-4K7P-9XQ2-M3TV" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/friend_onions"
+                    android:textAppearance="@style/TextAppearance.TorChat.Overline" />
+
+                <TextView
+                    android:id="@+id/onions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:lineSpacingMultiplier="1.2"
+                    android:textAppearance="@style/TextAppearance.TorChat.Mono"
+                    android:textIsSelectable="true" />
+
+                <TextView
+                    android:id="@+id/added"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="@color/tc_text_faint" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mute"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="start|center_vertical"
+            android:text="@string/mute"
+            app:icon="@drawable/ic_notifications_off" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/channel_settings"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:text="@string/notification_settings"
+            app:icon="@drawable/ic_notifications" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/remove"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:text="@string/remove_friend"
+            android:textColor="@color/tc_error"
+            app:icon="@drawable/ic_block"
+            app:iconTint="@color/tc_error" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The action bar on the home screen. -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search_chats"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/action_my_code"
+        android:icon="@drawable/ic_qr_code"
+        android:title="@string/my_code"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_toggle_view"
+        android:icon="@drawable/ic_list"
+        android:title="@string/view_as_list"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_requests"
+        android:title="@string/requests"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_reconnect"
+        android:title="@string/reconnect_all"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_diagnostics"
+        android:title="@string/diagnostics"
+        app:showAsAction="never" />
+</menu>

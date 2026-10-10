@@ -1,0 +1,17 @@
+*.iml
+.gradle
+.kotlin
+/local.properties
+local.properties
+/.idea
+.DS_Store
+build/
+/captures
+.externalNativeBuild
+.cxx
+
+# Release signing. Lose these and you cannot ship an update that upgrades an
+# existing install; commit them and anyone can.
+keystore.properties
+*.jks
+*.keystore

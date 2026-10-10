@@ -104,6 +104,9 @@ async function call(method, payload) {
 
 function promptSymbol() {
   symEl.textContent = state.active ? `${state.active.name}>` : '>';
+  // Every change of conversation passes through here, so this is where the
+  // main process learns which chat must not raise a desktop notification.
+  call('setActiveChat', state.active?.id || null).catch(() => {});
 }
 
 async function enterReady(boot) {
@@ -133,7 +136,11 @@ function describeTor(t) {
   if (!t) return;
 
   if (!t.running) {
-    sys('tor      not running — nothing can connect');
+    sys(
+      t.restarting
+        ? 'tor      stopped — bringing it back, your address stays the same'
+        : 'tor      not running — nothing can connect'
+    );
     return;
   }
 
@@ -334,6 +341,18 @@ window.torchat.on('torchat:friends-changed', async () => {
     state.active = found;
   }
   promptSymbol();
+});
+
+// Clicking a desktop notification opens that conversation.
+window.torchat.on('torchat:open-chat', (peerId) => {
+  openChat(peerId).catch((e) => err(e.message));
+});
+
+// The machine's network came back. Tor cannot tell; the engine is told, and
+// dials everyone now instead of waiting out a backoff earned while offline.
+window.addEventListener('online', () => {
+  sys('network is back — reconnecting');
+  call('reconnect').catch(() => {});
 });
 
 window.torchat.on('torchat:status', ({ id, name, online }) => {

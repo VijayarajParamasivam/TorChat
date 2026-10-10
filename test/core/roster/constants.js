@@ -32,11 +32,23 @@ run(() => {
   check('and the endpoint cap does too', MAX_ENDPOINTS === Endpoint.MAX_ENDPOINTS);
   check('the onion port is a valid port', ONION_PORT > 0 && ONION_PORT < 65536);
 
-  // Every timing is a positive number of milliseconds.
+  // Every timing is a positive number of milliseconds — or a list of them.
   for (const [name, value] of Object.entries(constants)) {
     if (!name.endsWith('_MS')) continue;
-    check(`${name} is a positive duration`, Number.isFinite(value) && value > 0);
+    const values = Array.isArray(value) ? value : [value];
+    check(
+      `${name} is a positive duration`,
+      values.length > 0 && values.every((v) => Number.isFinite(v) && v > 0)
+    );
   }
+
+  // Restarting a dead Tor backs off rather than hammering, and never shrinks.
+  const restarts = constants.TOR_RESTART_DELAYS_MS;
+  check(
+    'tor restart delays never shrink',
+    restarts.every((delay, i) => i === 0 || delay >= restarts[i - 1])
+  );
+  check('the first tor restart is prompt', restarts[0] <= 10000);
 
   check('backoff grows from its floor to its ceiling', FIRST_BACKOFF_MS < MAX_BACKOFF_MS);
   check(

@@ -24,6 +24,7 @@ data behind carrier-grade NAT. No port forwarding, no relay server, no signup.
 - [Install](#install)
 - [Try it by yourself first](#try-it-by-yourself-first) ← start here
 - [Chat with a real friend](#chat-with-a-real-friend)
+- [On Android](#on-android)
 - [Commands](#commands)
 - [When something goes wrong](#when-something-goes-wrong)
 
@@ -149,6 +150,29 @@ Then either of you: `/chat <their handle>` and type.
 and older builds are rejected with `peer could not prove it owns that ID` — which
 reads like a security warning but just means "one of you needs to `git pull`".
 
+## On Android
+
+[`android/`](android/) holds an Android client that speaks the same protocol
+byte for byte, so a phone and this desktop app can be friends. It runs Tor
+inside the app, keeps your node up in a foreground service, and shows
+notifications for messages from any chat you are not looking at.
+
+```bash
+cd android
+./gradlew :app:assembleDebug
+```
+
+Or open `android/` in Android Studio. See [android/README.md](android/README.md)
+for the full picture.
+
+Add each other the same way as here: share your code from **My code**, or scan
+the QR. A code sent to the phone over any messenger can be opened straight in
+TorChat with **Share → TorChat**.
+
+On Android, unlike desktop, a peer that dials in with your code arrives as a
+**request** you accept or reject. That is a local choice; the protocol between
+the two apps is the same.
+
 ## Commands
 
 Anything that isn't a slash command is sent to whoever you're chatting with.
@@ -195,7 +219,20 @@ megabytes. Give it 30–60 seconds. The log shows progress as it goes.
 
 **`/tor` says "published, still propagating".**
 Your address exists but the network hasn't finished learning about it. Wait a
-minute. Friends can't reach you until it says reachable.
+minute. Friends can't reach you until it says reachable — and the log says so
+the moment it is, even if that is after the startup wait gave up.
+
+**The log says `tor: exited unexpectedly`.**
+TorChat restarts it on its own within seconds, retrying with longer waits if it
+keeps failing. Your address stays the same, and everyone is redialled once it
+is back. Nothing for you to do.
+
+**I was away and missed messages.**
+A message from anyone but the conversation you have open, or any message while
+the window is in the background, raises a desktop notification and flashes the
+taskbar. Clicking the notification opens that conversation. After the machine
+sleeps, or its network drops and returns, TorChat redials everyone straight
+away instead of waiting out its retry timer.
 
 **`/try` says they're not running it.**
 That is usually exactly what it means. An onion service only answers while the
@@ -416,7 +453,8 @@ each owning its own validation. `src/core/` is the machinery that moves them
 around.
 
 ```
-electron/main.js            app lifecycle, IPC, engine ownership
+android/                    the Android client — see android/README.md
+electron/main.js            app lifecycle, IPC, engine ownership, notifications
 electron/preload.js         the only bridge to the UI
 
 src/models/profile.js       a display name and sigil, clamped
