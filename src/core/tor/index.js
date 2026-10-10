@@ -186,7 +186,7 @@ class Tor extends EventEmitter {
     this.process.once('exit', (code) => {
       if (!this.ready) return;
       this.ready = false;
-      this.log(`tor: exited unexpectedly (code ${code}) — restart torchat to reconnect`);
+      this.log(`tor: exited unexpectedly (code ${code})`);
       this.emit('down', code);
     });
   }
@@ -366,33 +366,56 @@ class Tor extends EventEmitter {
       return false;
     }
 
+    const control = this.control;
+    const isUpload = (lines) =>
+      lines.some((line) => /HS_DESC\s+UPLOADED\s/.test(line) && line.includes(serviceId));
+
+    const unsubscribe = async () => {
+      try {
+        await control.unsubscribe('HS_DESC');
+      } catch {
+        /* nothing further depends on unsubscribing */
+      }
+    };
+
     const uploaded = await new Promise((resolve) => {
       const timer = setTimeout(() => finish(false), timeoutMs);
 
       const finish = (value) => {
         clearTimeout(timer);
-        this.control.removeListener('event', onEvent);
+        control.removeListener('event', onEvent);
         resolve(value);
       };
 
       const onEvent = (lines) => {
-        const seen = lines.some(
-          (line) => /HS_DESC\s+UPLOADED\s/.test(line) && line.includes(serviceId)
-        );
-        if (seen) finish(true);
+        if (isUpload(lines)) finish(true);
       };
 
-      this.control.on('event', onEvent);
+      control.on('event', onEvent);
       this.log('tor: waiting for the onion descriptor to publish...');
     });
 
-    try {
-      await this.control.unsubscribe('HS_DESC');
-    } catch {
-      /* nothing further depends on unsubscribing */
+    if (uploaded) {
+      await unsubscribe();
+      return true;
     }
 
-    return uploaded;
+    // Timing out was never the end of it: the descriptor usually lands a little
+    // later. The old code unsubscribed here, so `published` stayed false for the
+    // life of the process and /tor kept saying "still propagating" about an
+    // address friends were already reaching. Keep listening, and say so once
+    // it is true.
+    const late = (lines) => {
+      if (!isUpload(lines) || control !== this.control) return;
+      control.removeListener('event', late);
+      this.published = true;
+      this.log(`tor: reachable at ${this.address} — the descriptor published late`);
+      this.emit('published');
+      unsubscribe();
+    };
+    control.on('event', late);
+
+    return false;
   }
 
   // --- dialling -----------------------------------------------------------
